@@ -10,12 +10,12 @@ function SeatGrid({ seats, selected }) {
 
   // build a fixed array of 100 seat definitions,
   // using backend data where available and defaulting to unbooked.
-  const seatList = Array.from({ length: 100 }, (_, idx) => {
-    const id = idx + 1;
-    return seats.find((s) => s.id === id) || { id, booked: false };
-  });
-
+  // const seatList = Array.from({ length: 100 }, (_, idx) => {
+  //   return { id: idx + 1, ...seats[idx] };
+  // });
+  // console.log("SeatGrid render - seats:", seatList, "selected:", selected);
   const getLabel = (id) => {
+    // console.log("getLabel called for id:", id);
     const row = Math.floor((id - 1) / 10);
     const col = ((id - 1) % 10) + 1;
     const letter = String.fromCharCode(65 + row);
@@ -36,9 +36,9 @@ function SeatGrid({ seats, selected }) {
         mb: 7,
       }}
     >
-      {seatList.map((seat) => {
+      {seats.map((seat, index) => {
         const booked = seat.booked;
-        const picked = selected.includes(seat.id);
+        const picked = selected.includes(index + 1);
         const bgColor = booked
           ? theme.palette.grey[500]
           : picked
@@ -49,8 +49,8 @@ function SeatGrid({ seats, selected }) {
           <Paper
             key={seat.id}
             elevation={2}
-            onClick={() => !booked && dispatch(toggleSeat(seat.id))}
-            aria-label={`Seat ${getLabel(seat.id)} ${booked ? "booked" : "available"}`}
+            onClick={() => !booked && dispatch(toggleSeat(index + 1))}
+            aria-label={`Seat ${getLabel(index + 1)} ${booked ? "booked" : "available"}`}
             sx={{
               height: 40,
               display: "flex",
@@ -73,7 +73,7 @@ function SeatGrid({ seats, selected }) {
                 sx={{ color: theme.palette.common.white, fontSize: 18 }}
               />
             ) : (
-              getLabel(seat.id)
+              getLabel(index + 1)
             )}
           </Paper>
         );

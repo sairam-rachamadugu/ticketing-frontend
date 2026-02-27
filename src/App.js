@@ -15,6 +15,7 @@ import {
   AppBar,
   Toolbar,
 } from "@mui/material";
+import ErrorPopup from "./component/ErrorPopup";
 
 function App() {
   const dispatch = useDispatch();
@@ -41,6 +42,7 @@ function App() {
           </Typography>
         </Toolbar>
       </AppBar>
+      <ErrorPopup />
       <Box sx={{ minHeight: "100vh", bgcolor: "background.default", py: 4 }}>
         <Container component="Paper" elevation={3} sx={{ py: 4 }}>
           <Typography variant="subtitle1" gutterBottom sx={{ mt: 3 }}>
@@ -116,6 +118,15 @@ function App() {
                   disabled={!selected.length}
                 >
                   Buy Tickets
+                </Button>
+
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleBuy}
+                  // disabled={!selected.length}
+                >
+                  Initialize Event
                 </Button>
               </Box>
             </Box>

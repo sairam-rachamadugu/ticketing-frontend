@@ -10,9 +10,12 @@ function SeatGrid({ seats, selected }) {
 
   // build a fixed array of 100 seat definitions,
   // using backend data where available and defaulting to unbooked.
-  // const seatList = Array.from({ length: 100 }, (_, idx) => {
-  //   return { id: idx + 1, ...seats[idx] };
-  // });
+  const seatList = seats?.length
+    ? seats
+    : Array.from({ length: 100 }, (_, idx) => {
+        const id = idx + 1;
+        return { id, booked: false };
+      });
   // console.log("SeatGrid render - seats:", seatList, "selected:", selected);
   const getLabel = (id) => {
     // console.log("getLabel called for id:", id);
@@ -36,7 +39,7 @@ function SeatGrid({ seats, selected }) {
         mb: 7,
       }}
     >
-      {seats.map((seat, index) => {
+      {seatList.map((seat, index) => {
         const booked = seat.booked;
         const picked = selected.includes(index + 1);
         const bgColor = booked
